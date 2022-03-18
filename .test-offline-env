@@ -1,0 +1,5 @@
+# Below are the environment variables that will be injected
+# Into cucumber when running 'yarn test'
+GraphqlLambdaFunctionQualifiedArn=""
+ServiceEndpoint="http://localhost:3000"
+ServerlessDeploymentBucketName=""

@@ -1,0 +1,72 @@
+name: Build, Lint and Test
+on: 
+  push:
+    branches-ignore:
+      - "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+
+      - name: Setup yarn
+        run: npm install -g yarn
+        
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            **/.eslintcache
+            **/.yarn
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: |
+          yarn --frozen-lockfile --network-timeout=100000 --ignore-scripts
+
+      - name: Test
+        run: yarn test
+      
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+
+      - name: Setup yarn
+        run: npm install -g yarn
+        
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+            **/.eslintcache
+            **/.yarn
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: |
+          yarn --frozen-lockfile --network-timeout=100000 --ignore-scripts
+
+      - name: Lint
+        run: yarn lint
