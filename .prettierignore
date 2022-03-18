@@ -1,0 +1,10 @@
+*.*
+!*.ts
+!*.json
+!*.js
+/schema.graphql
+/src/generated
+/node_modules
+/.serverless
+cucumber_report.json
+workflow

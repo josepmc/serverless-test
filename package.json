@@ -1,0 +1,92 @@
+{
+    "name": "serverless-test",
+    "version": "1.0.0",
+    "private": true,
+    "description": "",
+    "license": "ISC",
+    "author": "josepmc",
+    "main": "index.js",
+    "scripts": {
+        "fix": "yarn fix:prettier && yarn fix:eslint",
+        "fix:eslint": "eslint --config .eslintrc.js --ignore-path .eslintignore --fix \"**/*\"",
+        "fix:prettier": "prettier --config .prettierrc.js --ignore-path .prettierignore --write \"**/*\"",
+        "lint": "yarn lint:prettier && yarn lint:eslint && yarn lint:ts",
+        "lint:eslint": "eslint --config .eslintrc.js --ignore-path .eslintignore \"**/*\"",
+        "lint:prettier": "prettier --check --config .prettierrc.js --ignore-path .prettierignore \"**/*\"",
+        "lint:ts": "tsc -p . -noEmit",
+        "run:local": "serverless offline start",
+        "test": "ts-node scripts/runIntegTestsOffline.ts",
+        "test:local": "dotenv -e ./.test-offline-env -- cucumber-js -p default"
+    },
+    "keywords": [],
+    "dependencies": {
+        "pino": "^7.9.1",
+        "serverless": "^3.7.8"
+    },
+    "devDependencies": {
+        "@aws-sdk/types": "^3.54.1",
+        "@cucumber/cucumber": "^7.3.2",
+        "@cucumber/pretty-formatter": "1.0.0-alpha.2",
+        "@serverless/typescript": "^3.7.5",
+        "@types/aws-lambda": "^8.10.93",
+        "@types/chai": "^4.3.0",
+        "@types/cucumber": "^7.0.0",
+        "@types/mocha": "^9.1.0",
+        "@types/supertest": "^2.0.11",
+        "@typescript-eslint/eslint-plugin": "^5.15.0",
+        "@typescript-eslint/parser": "^5.15.0",
+        "aws-lambda": "^1.0.7",
+        "aws-sdk": "^2.1095.0",
+        "chai": "^4.3.6",
+        "command-line-args": "^5.2.1",
+        "cucumber-tsflow": "4.0.0-preview.7",
+        "cz-conventional-changelog": "^3.3.0",
+        "dotenv-cli": "^5.0.0",
+        "eslint": "^8.11.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-simple-import-sort": "^7.0.0",
+        "husky": "^7.0.4",
+        "node-yaml-config": "^1.0.0",
+        "pino-pretty": "^7.5.4",
+        "prettier": "^2.6.0",
+        "prettier-plugin-package": "^1.3.0",
+        "serverless-offline": "^8.5.0",
+        "serverless-offline-lambda": "^1.0.6",
+        "serverless-webpack": "^5.6.1",
+        "supertest": "^6.2.2",
+        "ts-loader": "^9.2.8",
+        "ts-node": "^10.7.0",
+        "typescript": "^4.6.2",
+        "webpack": "^5.70.0",
+        "webpack-node-externals": "^3.0.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "post-commit": "run-if-changed",
+            "post-checkout": "run-if-changed",
+            "post-merge": "run-if-changed",
+            "post-rewrite": "run-if-changed"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx}": [
+            "eslint --config .eslintrc.js --ignore-path .eslintignore --fix",
+            "prettier --config .prettierrc.js --ignore-path .prettierignore --write",
+            "git add"
+        ],
+        "*.{md,json}": [
+            "prettier --config .prettierrc.js --ignore-path .prettierignore --write",
+            "git add"
+        ]
+    },
+    "run-if-changed": {
+        "yarn.lock": "yarn install --prefer-offline --pure-lockfile"
+    }
+}
