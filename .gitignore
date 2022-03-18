@@ -1,0 +1,45 @@
+# Keep environment variables out of version control
+.env
+.test.env
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# serverless
+.serverless
+
+# nexus
+nexus-typegen.d.ts
+schema.graphql
+
+# production
+/build
+/dist
+/graphql.schema.json
+/.linaria-cache
+/src/generated
+
+# misc
+.DS_Store
+*.pem
+*.db
+tmp/*
+.yarn-error.log
+yarn.lock
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.test-stage-env
+
+# webpack
+.webpack
+cucumber_report.json
